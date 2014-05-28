@@ -14,7 +14,7 @@ env:
 
 before_script:
     - composer require symfony/symfony:${SYMFONY_VERSION}
-    - composer require twig/extensions: "1.0.*@dev"
+    - composer require twig/extensions: "1.0.*"
     - composer require symfony/assetic-bundle: "2.3.*"
     - composer require symfony/monolog-bundle: ">=2.3"
     - composer require composer update --dev
