@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="external_tracking.manager.class" />
+        <parameter key="external_tracking.trackers_collection.class" />
+    </parameters>
+
+    <services>
+        <service id="external_tracking.manager" class="%external_tracking.manager.class%">
+            <argument type="service" id="session" />
+        </service>
+    </services>
+</container>
