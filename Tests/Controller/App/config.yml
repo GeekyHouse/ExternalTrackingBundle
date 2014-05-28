@@ -1,0 +1,31 @@
+# Tests/Controller/App/config.yml
+framework:
+    secret:          secret
+    test: ~
+    router:          { resource: "%kernel.root_dir%/routing.yml" }
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:      { engines: ['twig'] }
+    session:
+        storage_id: session.storage.filesystem
+
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      nested
+        nested:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+
+twig:
+    paths:
+        "%kernel.root_dir%/../views": test_views
+
+services:
+    externaltracking.testtracker:
+        class: GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service\TestTracker
+        arguments: [@external_tracking.manager]

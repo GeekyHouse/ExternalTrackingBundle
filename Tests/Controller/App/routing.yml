@@ -1,0 +1,8 @@
+# Tests/Controller/App/routing.yml
+external_tracking_index:
+    pattern: /{name}
+    defaults: { _controller: GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller\IndexController::indexAction }
+
+external_tracking_indexresponse:
+    pattern: /response/{name}
+    defaults: { _controller: GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller\IndexController::indexResponseAction }
