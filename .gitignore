@@ -1,6 +1,6 @@
 vendor/
-Tests/App/cache
-Tests/App/logs
+Tests/App/cache/
+Tests/App/logs/
 composer.phar
 composer.lock
 phpunit.xml
