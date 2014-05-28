@@ -13,11 +13,11 @@ env:
     - SYMFONY_VERSION=2.4.*
 
 before_script:
-    - symfony/symfony:${SYMFONY_VERSION}
-    - twig/extensions: "1.0.*@dev"
-    - symfony/assetic-bundle: "2.3.*"
-    - symfony/monolog-bundle: ">=2.3"
-    - composer update --dev
+    - composer require symfony/symfony:${SYMFONY_VERSION}
+    - composer require twig/extensions: "1.0.*@dev"
+    - composer require symfony/assetic-bundle: "2.3.*"
+    - composer require symfony/monolog-bundle: ">=2.3"
+    - composer require composer update --dev
 
 script:
     - phpunit --coverage-text
