@@ -4,7 +4,7 @@
     "keywords": ["tracking", "external tracking", "symfony", "tracker manager"],
     "homepage": "https://github.com/GeekyHouse/ExternalTrackingBundle",
     "type": "symfony-bundle",
-    "license": "LGPL",
+    "license": "LGPL-3.0+",
     "authors": [
         {
             "name": "Damien Jarry",
