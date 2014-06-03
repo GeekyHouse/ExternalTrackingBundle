@@ -241,6 +241,7 @@ class ExternalTrackingManager
     protected function getTrackersByEvent($event)
     {
         $methodsList = $this->getMethodsListByEvent($event);
+        if($event == 'all') $event = $this->getEvent();
 
         $trackers    = array();
 
