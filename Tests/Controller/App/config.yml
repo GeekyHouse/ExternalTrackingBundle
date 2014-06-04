@@ -18,3 +18,8 @@ services:
     externaltracking.testtracker:
         class: GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service\TestTracker
         arguments: [@external_tracking.manager]
+    externaltracking.event.customListener:
+        class: GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener\CustomListener
+        tags:
+            - { name: kernel.event_listener, event: geekyhouse.event.before_get_trackers, method: beforeGetTrackers }
+            - { name: kernel.event_listener, event: geekyhouse.event.after_get_trackers, method: afterGetTrackers }

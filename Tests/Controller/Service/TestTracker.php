@@ -1,4 +1,5 @@
 <?php
+
 namespace GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service;
 
 use GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager;

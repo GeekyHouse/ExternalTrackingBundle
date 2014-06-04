@@ -74,7 +74,7 @@ class ExternalTrackingTest extends WebTestCase
         $this->assertEquals(0, sizeof($ExternalTrackingManager->getData()));
 
         $crawler = $this->client->request('GET', '/DamienJarry');
-        $this->assertEquals(1, sizeof($ExternalTrackingManager->getData()));
+        $this->assertEquals(3, sizeof($ExternalTrackingManager->getData()));
 
         $data = $ExternalTrackingManager->getData();
         $this->assertEquals('DamienJarry', $data['name']);
@@ -106,7 +106,7 @@ class ExternalTrackingTest extends WebTestCase
         $this->assertEquals('Paris', $data['home']);
 
         $crawler = $this->client->request('GET', '/DamienJarry');
-        $this->assertEquals(2, sizeof($ExternalTrackingManager->getData()));
+        $this->assertEquals(4, sizeof($ExternalTrackingManager->getData()));
 
         $data = $ExternalTrackingManager->getData();
         $this->assertEquals('DamienJarry', $data['name']);
@@ -130,6 +130,26 @@ class ExternalTrackingTest extends WebTestCase
         $crawler = $this->client->request('GET', '/response/DamienJarry');
         $this->assertEquals(1, $crawler->filter('html:contains("Tracker 1")')->count());
         $this->assertEquals(1, $crawler->filter('html:contains("Tracker 3")')->count());
+    }
+
+    /**
+     * @Test
+     */
+    public function testEventDispatcher()
+    {
+        $this->initClient();
+
+        $ExternalTrackingManager = $this->client->getContainer()->get('external_tracking.manager');
+        $this->assertEquals(0, sizeof($ExternalTrackingManager->getData()));
+
+        $crawler = $this->client->request('GET', '/DamienJarry');
+        $this->assertEquals(3, sizeof($ExternalTrackingManager->getData()));
+
+        $data = $ExternalTrackingManager->getData();
+        $this->assertEquals('success', $data['event_before']);
+
+        $data = $ExternalTrackingManager->getData();
+        $this->assertEquals('success', $data['event_after']);
     }
 
     public function setUp()
