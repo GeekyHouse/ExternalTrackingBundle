@@ -46,11 +46,63 @@ public function registerBundles()
     );
 }
 ```
+
 ### Conﬁgure service in your YAML conﬁguration
+You can overwrite bundle classes. Default values :
 ````
-#app/conﬁg/conﬁg.yml
+# app/conﬁg/conﬁg.yml
 external_tracking:
-	manager_class: ~
-	request_listener_class: ~
-	extension_class: ~
+	manager_class: GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager
+	request_listener_class: GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener
+	extension_class: GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension
 ````
+
+### Custom events listeners
+This bundle provides 2 events dispatchers that you can use :
+* `geekyhouse.event.before_get_trackers` : Called first when "getTrackers" is called
+* `geekyhouse.event.after_get_trackers` : Called juste before return when "getTrackers" is called
+
+You can easily create a custom service which add datas just before writing trackers, like this :
+````
+# app/conﬁg/conﬁg.yml
+services:
+    my.custom.listener:
+        class: My\Bundle\EventListener\CustomListener
+        tags:
+            - { name: kernel.event_listener, event: geekyhouse.event.before_get_trackers, method: beforeGetTrackers }
+            - { name: kernel.event_listener, event: geekyhouse.event.after_get_trackers, method: afterGetTrackers }
+        arguments: [@service_container]
+````
+````
+// My/Bundle/EventListener/CustomListener.php
+namespace My\Bundle\EventListener;
+
+use GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent;
+
+class CustomListener
+{
+
+    private $container;
+
+    public function __construct($container)
+    {
+        $this->container = $container;
+    }
+
+    public function beforeGetTrackers(ExternalTrackingEvent $event)
+    {
+        $UserManager = $this->container->get('my.user.manager');
+        $this->ExternalTrackingManager->pushData(
+            array(
+                'user' => $UserManager->getCurrentUser()
+            )
+        );
+    }
+
+    public function afterGetTrackers(ExternalTrackingEvent $event)
+    {
+    }
+
+}
+````
+In this example, we just add custom user datas on ExternalTrackingManager systematically.
