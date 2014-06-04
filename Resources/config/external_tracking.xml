@@ -12,6 +12,7 @@
     <services>
         <service id="external_tracking.manager" class="%external_tracking.manager.class%">
             <argument type="service" id="session" />
+            <argument type="service" id="event_dispatcher" />
         </service>
     </services>
 </container>
