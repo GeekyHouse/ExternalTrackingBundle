@@ -12,6 +12,8 @@
 namespace GeekyHouse\ExternalTrackingBundle\Service;
 
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent;
 
 /**
  * External tracking manager
@@ -21,6 +23,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @author  Damien Jarry
  * @version 1.0
  * @uses    Symfony\Component\HttpFoundation\Session\Session
+ * @uses    Symfony\Component\EventDispatcher\EventDispatcherInterface
+ * @uses    GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent
  */
 class ExternalTrackingManager
 {
@@ -29,6 +33,11 @@ class ExternalTrackingManager
      * @var Session $Session, A Session instance
      */
     private $Session;
+
+    /**
+     * @var EventDispatcherInterface $EventDispatcherInterface, An EventDispatcherInterface instance
+     */
+    private $EventDispatcherInterface;
 
     /**
      * @var array $trackersCollection, The list of trackers registered
@@ -59,13 +68,15 @@ class ExternalTrackingManager
      * Constructor
      * Store some variables on the current instance
      *
-     * @param  Session $Session,            A Session instance
+     * @param  Session $Session,                  A Session instance
+     * @param  Session $EventDispatcherInterface, An EventDispatcherInterface instance
      * @return ExternalTrackingManager
      */
-    public function __construct(Session $Session)
+    public function __construct(Session $Session, EventDispatcherInterface $EventDispatcherInterface)
     {
-        $this->Session = $Session;
-        $this->data    = array();
+        $this->Session                  = $Session;
+        $this->EventDispatcherInterface = $EventDispatcherInterface;
+        $this->data                     = array();
     }
 
     /**
@@ -269,6 +280,10 @@ class ExternalTrackingManager
      */
     protected function getTrackers()
     {
+        // Throw an event before
+        $event = new ExternalTrackingEvent($this);
+        $this->EventDispatcherInterface->dispatch('geekyhouse.event.before_get_trackers', $event);
+
         // Get trackers already in session
         $trackers = $this->getSessionTrackers();
         if(!$trackers) {
@@ -280,6 +295,10 @@ class ExternalTrackingManager
 
         // Get trackers for "all" event
         $trackers = $this->mergeTrackersByEvent('all', $trackers);
+
+        // Throw an event after
+        $event = new ExternalTrackingEvent($this);
+        $this->EventDispatcherInterface->dispatch('geekyhouse.event.after_get_trackers', $event);
 
         return $trackers;
     }
