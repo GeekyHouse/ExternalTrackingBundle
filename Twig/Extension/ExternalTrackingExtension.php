@@ -104,7 +104,7 @@ class ExternalTrackingExtension extends Twig_Extension
                     ExternalTrackerPlace.innerHTML = "'.$trackersOutput.'";
                 var scripts = ExternalTrackerPlace.getElementsByTagName(\'script\');
                 for(var i in scripts) {
-                    eval(scripts[i].innerHTML);
+                    window.eval(scripts[i].innerHTML);
                 }
             ';
 
