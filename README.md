@@ -73,7 +73,7 @@ services:
             - { name: kernel.event_listener, event: geekyhouse.event.after_get_trackers, method: afterGetTrackers }
         arguments: [@service_container]
 ````
-````
+``` php
 // My/Bundle/EventListener/CustomListener.php
 namespace My\Bundle\EventListener;
 
@@ -104,5 +104,5 @@ class CustomListener
     }
 
 }
-````
+```
 In this example, we just add custom user datas on ExternalTrackingManager systematically.
