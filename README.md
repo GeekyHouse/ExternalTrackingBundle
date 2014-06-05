@@ -106,3 +106,25 @@ class CustomListener
 }
 ```
 In this example, we just add custom user datas on ExternalTrackingManager systematically.
+
+### Twig Extension
+A Twig extension is given by default : `GeekyHouse\ExternalTrackingBundle\Twig\Extension`
+
+It provides the function `get_external_trackers` which write your trackers on a page.
+
+This function takes 2 arguments :
+* `onDocumentReady` _(default TRUE)_ If TRUE, wait the DOM loading before writing the trackers.
+* `timer` _(default 500)_ The time in milliseconds to wait before writing the trackers (after DOM loading if TRUE).
+
+Use this function on a Twig template like this :
+```
+# base.html.twig
+[...]
+    {{ get_external_trackers(true, 500)|raw }}
+[...]
+```
+**Don't forget the `|raw`, or Twig will escape the JavaScript tags.**
+
+It's recomended to write this line _at the end_ of the page.
+
+This extension contains a private method, `cleanJavascriptString`, whose purpose is to convert PHP string into evaluable JavaScript string. This method is in bêta test currently, please tell us if you have some problem with it :)
