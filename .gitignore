@@ -4,3 +4,6 @@ Tests/Controller/App/logs
 composer.phar
 composer.lock
 phpunit.xml
+phpdoc.xml
+php-cs-fixer.phar
+phpDocumentor.phar
