@@ -20,15 +20,19 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  *
  * @author  Damien Jarry
  * @version 1.0
- * @uses    Symfony\Bundle\FrameworkBundle\Test\WebTestCase
+ * @uses    Symfony\Bundle\FrameworkBundle\Test\WebTestCase WebTestCase
+ * @uses    Symfony\Bundle\FrameworkBundle\Client           Client
  */
 class ExternalTrackingTest extends WebTestCase
 {
 
+    /**
+     * @var Client $client A Client instance
+     */
     private $client;
 
     /**
-     * @Test
+     * Test default event on tracking manager
      */
     public function testDefaultEvent()
     {
@@ -47,7 +51,7 @@ class ExternalTrackingTest extends WebTestCase
     }
 
     /**
-     * @Test
+     * Test custom event on tracking manager
      */
     public function testEvent()
     {
@@ -64,7 +68,7 @@ class ExternalTrackingTest extends WebTestCase
     }
 
     /**
-     * @Test
+     * Test default datas on tracking manager
      */
     public function testDefaultData()
     {
@@ -81,7 +85,7 @@ class ExternalTrackingTest extends WebTestCase
     }
 
     /**
-     * @Test
+     * Test custom datas on tracking manager
      */
     public function testData()
     {
@@ -113,7 +117,7 @@ class ExternalTrackingTest extends WebTestCase
     }
 
     /**
-     * @Test
+     * Test trackers writing on template
      */
     public function testTracker()
     {
@@ -133,7 +137,7 @@ class ExternalTrackingTest extends WebTestCase
     }
 
     /**
-     * @Test
+     * Test custom event listeners
      */
     public function testEventDispatcher()
     {
@@ -152,6 +156,9 @@ class ExternalTrackingTest extends WebTestCase
         $this->assertEquals('success', $data['event_after']);
     }
 
+    /**
+     * Setup the current application for test
+     */
     public function setUp()
     {
         parent::setUp();
@@ -159,6 +166,9 @@ class ExternalTrackingTest extends WebTestCase
         $this->initClient();
     }
 
+    /**
+     * Create a client
+     */
     private function initClient()
     {
         $this->client = $this->createClient();

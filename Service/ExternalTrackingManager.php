@@ -22,45 +22,45 @@ use GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent;
  *
  * @author  Damien Jarry
  * @version 1.0
- * @uses    Symfony\Component\HttpFoundation\Session\Session
- * @uses    Symfony\Component\EventDispatcher\EventDispatcherInterface
- * @uses    GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent
+ * @uses    Symfony\Component\HttpFoundation\Session\Session              Session
+ * @uses    Symfony\Component\EventDispatcher\EventDispatcherInterface    EventDispatcherInterface
+ * @uses    GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent ExternalTrackingEvent
  */
 class ExternalTrackingManager
 {
 
     /**
-     * @var Session $Session, A Session instance
+     * @var Session $Session A Session instance
      */
     private $Session;
 
     /**
-     * @var EventDispatcherInterface $EventDispatcherInterface, An EventDispatcherInterface instance
+     * @var EventDispatcherInterface $EventDispatcherInterface An EventDispatcherInterface instance
      */
     private $EventDispatcherInterface;
 
     /**
-     * @var array $trackersCollection, The list of trackers registered
+     * @var array $trackersCollection The list of trackers registered
      */
     private $trackersCollection = array();
 
     /**
-     * @var string $defaultEvent, The default event used for tracking
+     * @var string $defaultEvent The default event used for tracking
      */
     private $defaultEvent;
 
     /**
-     * @var string $event, The event used for tracking
+     * @var string $event The event used for tracking
      */
     private $event;
 
     /**
-     * @var string $data, The datas available for tracking
+     * @var string $data The datas available for tracking
      */
     private $data;
 
     /**
-     * @var string SESSION_TRACKER_PREFIX, The session key to store trackers
+     * @var string SESSION_TRACKER_PREFIX The session key to store trackers
      */
     const SESSION_TRACKER_PREFIX = '_external_trackers';
 
@@ -68,9 +68,10 @@ class ExternalTrackingManager
      * Constructor
      * Store some variables on the current instance
      *
-     * @param  Session $Session,                  A Session instance
-     * @param  Session $EventDispatcherInterface, An EventDispatcherInterface instance
-     * @return ExternalTrackingManager
+     * @param Session $Session                  A Session instance
+     * @param Session $EventDispatcherInterface An EventDispatcherInterface instance
+     *
+     * @return ExternalTrackingManager An ExternalTrackingManager instance
      */
     public function __construct(Session $Session, EventDispatcherInterface $EventDispatcherInterface)
     {
@@ -81,14 +82,15 @@ class ExternalTrackingManager
 
     /**
      * This methods store an array of methods for an event
-     * 
-     * @param  string $event,   The event targeted
-     * @param  array  $methods, The methods to invoke. Each method must have a label (= tracker name).
-     * @return ExternalTrackingManager
+     *
+     * @param string $event   The event targeted
+     * @param array  $methods The methods to invoke
+     *
+     * @return ExternalTrackingManager An ExternalTrackingManager instance
      */
     public function registerEvent($event, array $methods)
     {
-        if(!isset($this->trackersCollection[$event]) || !is_array($this->trackersCollection[$event])) {
+        if (!isset($this->trackersCollection[$event]) || !is_array($this->trackersCollection[$event])) {
             $this->trackersCollection[$event] = array();
         }
         $this->trackersCollection[$event] = array_merge($this->trackersCollection[$event], $methods);
@@ -99,13 +101,14 @@ class ExternalTrackingManager
     /**
      * Set the default event
      *
-     * @param  string $event,                  The default event to set
-     * @param  boolean $force (default=false), Overwrite the default event if TRUE
-     * @return ExternalTrackingManager
+     * @param string  $event The default event to set
+     * @param boolean $force Overwrite the default event if TRUE
+     *
+     * @return ExternalTrackingManager An ExternalTrackingManager instance
      */
     public function setDefaultEvent($event, $force = false)
     {
-        if(!$this->defaultEvent || $force) {
+        if (!$this->defaultEvent || $force) {
             $this->defaultEvent = $event;
         }
 
@@ -115,13 +118,14 @@ class ExternalTrackingManager
     /**
      * Set the current event
      *
-     * @param  string  $event,                The event to set
-     * @param  boolean $force (default=true), Overwrite the current event if TRUE
-     * @return ExternalTrackingManager
+     * @param string  $event The event to set
+     * @param boolean $force Overwrite the current event if TRUE
+     *
+     * @return ExternalTrackingManager An ExternalTrackingManager instance
      */
     public function setEvent($event, $force = true)
     {
-        if(empty($this->event) || $force == true) {
+        if (empty($this->event) || $force == true) {
             $this->event = $event;
         }
 
@@ -131,7 +135,7 @@ class ExternalTrackingManager
     /**
      * This method returns the current event used
      *
-     * @return string
+     * @return string The current event
      */
     public function getEvent()
     {
@@ -141,13 +145,14 @@ class ExternalTrackingManager
     /**
      * This method allows to add data on current instance.
      *
-     * @param  array $data,           The datas to insert
-     * @param  force (default=false), Overwrite current datas if TRUE
-     * @return ExternalTrackingManager
+     * @param array   $data  The datas to insert
+     * @param boolean $force Overwrite current datas if TRUE
+     *
+     * @return ExternalTrackingManager An ExternalTrackingManager instance
      */
     public function pushData(array $data, $force = false)
     {
-        if($force) {
+        if ($force) {
             $this->data = array_merge($this->data, $data);
         } else {
             $this->data = array_merge($data, $this->data);
@@ -159,7 +164,7 @@ class ExternalTrackingManager
     /**
      * This method returns the current datas
      *
-     * @return string
+     * @return array The datas stored in current instance
      */
     public function getData()
     {
@@ -169,7 +174,7 @@ class ExternalTrackingManager
     /**
      * This method adds available trackers in session
      *
-     * @return ExternalTrackingManager
+     * @return ExternalTrackingManager An ExternalTrackingManager instance
      */
     public function setSessionTrackers()
     {
@@ -182,12 +187,12 @@ class ExternalTrackingManager
     /**
      * This method returns trackers from session
      *
-     * @return array
+     * @return array The list of trackers in session
      */
     public function getSessionTrackers()
     {
         $trackers = $this->Session->get(self::SESSION_TRACKER_PREFIX);
-        if(!$trackers) {
+        if (!$trackers) {
             $trackers = array();
         }
 
@@ -197,7 +202,7 @@ class ExternalTrackingManager
     /**
      * This method removes trackers from session
      *
-     * @return ExternalTrackingManager
+     * @return ExternalTrackingManager An ExternalTrackingManager instance
      */
     public function removeSessionTrackers()
     {
@@ -209,7 +214,7 @@ class ExternalTrackingManager
     /**
      * This method returns a string with all trackers available for writing.
      *
-     * @return string
+     * @return string The trackers ready to be used on template
      */
     public function getTrackersHTML()
     {
@@ -217,8 +222,8 @@ class ExternalTrackingManager
 
         $currentTrackers = $this->getTrackers();
 
-        foreach($currentTrackers as $event => $trackers) {
-            foreach($trackers as $htmlTracker) {
+        foreach ($currentTrackers as $event => $trackers) {
+            foreach ($trackers as $htmlTracker) {
                 $return .= $htmlTracker;
             }
         }
@@ -229,13 +234,14 @@ class ExternalTrackingManager
     /**
      * This returns all methods registered for an event
      *
-     * @param  string $event, The event called
-     * @return array
+     * @param string $event The event called
+     *
+     * @return array The list of methods that have to be called to get trackers
      */
     protected function getMethodsListByEvent($event)
     {
-        foreach($this->trackersCollection as $evt => $methods) {
-            if($evt == $event) {
+        foreach ($this->trackersCollection as $evt => $methods) {
+            if ($evt == $event) {
                 return $methods;
             }
         }
@@ -246,8 +252,9 @@ class ExternalTrackingManager
     /**
      * Returns an array of trackers with their methods.
      *
-     * @param  string $event, The event sended
-     * @return array
+     * @param string $event The event sended
+     *
+     * @return array The list of trackers (HTML version) for an event that can be used on a template
      */
     protected function getTrackersByEvent($event)
     {
@@ -256,14 +263,14 @@ class ExternalTrackingManager
 
         $trackers    = array();
 
-        foreach($methodsList as $method) {
+        foreach ($methodsList as $method) {
             $htmlTracker = call_user_func(
-                $method, 
-                $event, 
+                $method,
+                $event,
                 $this->data
             );
             if(
-                    gettype($htmlTracker) === 'string' 
+                    gettype($htmlTracker) === 'string'
                 && !empty($htmlTracker)
             ) {
                 array_push($trackers, $htmlTracker);
@@ -276,7 +283,7 @@ class ExternalTrackingManager
     /**
      * This method returns an array with all trackers available for writing
      *
-     * @return array
+     * @return array The complete list of trackers that can be used on a template
      */
     protected function getTrackers()
     {
@@ -286,7 +293,7 @@ class ExternalTrackingManager
 
         // Get trackers already in session
         $trackers = $this->getSessionTrackers();
-        if(!$trackers) {
+        if (!$trackers) {
             $trackers = array();
         }
 
@@ -306,17 +313,18 @@ class ExternalTrackingManager
     /**
      * This method is an array_merge-like for array of trackers
      *
-     * @param  string $event,           The event sended
-     * @param  array  $currentTrackers, The current trackers list to merge in
-     * @return array
+     * @param string $event           The event sended
+     * @param array  $currentTrackers The current trackers list to merge in
+     *
+     * @return array The list of unique trackers for an event
      */
     private function mergeTrackersByEvent($event, array $currentTrackers)
     {
         $tmpTrackers = $this->getTrackersByEvent($event);
 
-        foreach($tmpTrackers as $htmlTracker) {
+        foreach ($tmpTrackers as $htmlTracker) {
             if(
-                   !array_key_exists($event, $currentTrackers) 
+                   !array_key_exists($event, $currentTrackers)
                 || !in_array($htmlTracker, $currentTrackers[$event])
             ) {
                 $currentTrackers[$event][] = $htmlTracker;

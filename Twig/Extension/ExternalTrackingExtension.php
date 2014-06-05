@@ -21,14 +21,14 @@ use Twig_Extension;
  *
  * @author  Damien Jarry
  * @version 1.0
- * @uses    GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager
- * @uses    Twig_Extension
+ * @uses    GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager ExternalTrackingManager
+ * @uses    Twig_Extension                                                    Twig_Extension
  */
 class ExternalTrackingExtension extends Twig_Extension
 {
 
     /**
-     * @var ExternalTrackingManager $ExternalTrackingManager, A ExternalTrackingManager instance
+     * @var ExternalTrackingManager $ExternalTrackingManager An ExternalTrackingManager instance
      */
     protected $ExternalTrackingManager;
 
@@ -36,8 +36,9 @@ class ExternalTrackingExtension extends Twig_Extension
      * Constructor
      * Store some variables on the current instance
      *
-     * @param  ExternalTrackingManager $ExternalTrackingManager, A ExternalTrackingManager instance
-     * @return ExternalTrackingExtension
+     * @param ExternalTrackingManager $ExternalTrackingManager A ExternalTrackingManager instance
+     *
+     * @return ExternalTrackingExtension An ExternalTrackingExtension instance
      */
     public function __construct(ExternalTrackingManager $ExternalTrackingManager)
     {
@@ -65,9 +66,10 @@ class ExternalTrackingExtension extends Twig_Extension
     /**
      * This method returns HTML formatted trackers
      *
-     * @param  boolean $documentReady, Define if the trackers have to wait until DOM is loaded
-     * @param  integer $delay,         Define a delay before write the trackers
-     * @return string
+     * @param boolean $documentReady Define if the trackers have to wait until DOM is loaded
+     * @param integer $delay         Define a delay before write the trackers
+     *
+     * @return string The HTML trackers (escaped format, use "raw()")
      */
     public function getExternalTrackers($documentReady = true, $delay = 500)
     {
@@ -82,20 +84,20 @@ class ExternalTrackingExtension extends Twig_Extension
         // Remove trackers from session
         $this->ExternalTrackingManager->removeSessionTrackers();
 
-        if(!empty($trackersOutput)) {
+        if (!empty($trackersOutput)) {
             // Open script
             $output .= '<div id="external-trackers-place"></div>
                         <script type="text/javascript">';
 
             // Open documentReady
-            if($documentReady) {
+            if ($documentReady) {
                 $output .= '
                     var DOMReady = function(a,b,c){b=document,c=\'addEventListener\';b[c]?b[c](\'DOMContentLoaded\',a):window.attachEvent(\'onload\',a)}
                     DOMReady(function(){';
             }
 
             // Open timeout
-            if($delayIsOk) {
+            if ($delayIsOk) {
                 $output .= 'setTimeout(function(){';
             }
 
@@ -103,18 +105,18 @@ class ExternalTrackingExtension extends Twig_Extension
                 var ExternalTrackerPlace = document.getElementById("external-trackers-place");
                     ExternalTrackerPlace.innerHTML = "'.$trackersOutput.'";
                 var scripts = ExternalTrackerPlace.getElementsByTagName(\'script\');
-                for(var i in scripts) {
+                for (var i in scripts) {
                     window.eval(scripts[i].innerHTML);
                 }
             ';
 
             // Close timeout
-            if($delayIsOk) {
+            if ($delayIsOk) {
                 $output .= '}, '.$delay.');';
             }
 
             // Close documentReady
-            if($documentReady) {
+            if ($documentReady) {
                 $output .= '});';
             }
 
@@ -127,8 +129,10 @@ class ExternalTrackingExtension extends Twig_Extension
 
     /**
      * This method alters JS string to be used by this extension
-     * @param  string $string, The original Javascript string
-     * @return string
+     *
+     * @param string $string The original Javascript string
+     *
+     * @return string The string cleaned to be used in "eval"
      */
     private function cleanJavascriptString($string)
     {
@@ -146,8 +150,9 @@ class ExternalTrackingExtension extends Twig_Extension
      * This method has to be used preg_replace_callback
      * It escape double quotes and escaped double quotes
      *
-     * @param  array $matches, The matches returned by preg_replace_callbackers
-     * @return string
+     * @param array $matches The matches returned by preg_replace_callbackers
+     *
+     * @return string The string escaped
      */
     private function escapeDoubleQuoteJS($matches)
     {
