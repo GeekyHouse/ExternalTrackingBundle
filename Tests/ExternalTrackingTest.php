@@ -20,8 +20,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  *
  * @author  Damien Jarry
  * @version 1.0
- * @uses    Symfony\Bundle\FrameworkBundle\Test\WebTestCase WebTestCase
- * @uses    Symfony\Bundle\FrameworkBundle\Client           Client
+ * @uses    Symfony\Bundle\FrameworkBundle\Test\WebTestCase
+ * @uses    Symfony\Bundle\FrameworkBundle\Client
  */
 class ExternalTrackingTest extends WebTestCase
 {
