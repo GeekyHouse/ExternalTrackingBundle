@@ -7,3 +7,6 @@ phpunit.xml
 phpdoc.xml
 php-cs-fixer.phar
 phpDocumentor.phar
+phpdoc-md/
+phpdoc.xml.dist
+push
