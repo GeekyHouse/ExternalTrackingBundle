@@ -1,0 +1,1297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project title="API Documentation" version="2.5.0&#10;">
+  <partials/>
+  <file path="Service/ExternalTrackingManager.php" generated-path="Service.ExternalTrackingManager.html" hash="0e9ac18628c9e85de350c636006bcd1a" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="29" package="global">
+      <extends/>
+      <name>ExternalTrackingManager</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</full_name>
+      <docblock line="29">
+        <description>External tracking manager</description>
+        <long-description>This class manage a trackers list linked to events.</long-description>
+        <tag name="author" line="29" description="Damien Jarry"/>
+        <tag name="version" line="29" description="1.0"/>
+        <tag name="uses" line="29" description="Session" link="Symfony\Component\HttpFoundation\Session\Session"/>
+        <tag name="uses" line="29" description="EventDispatcherInterface" link="Symfony\Component\EventDispatcher\EventDispatcherInterface"/>
+        <tag name="uses" line="29" description="ExternalTrackingEvent" link="GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent"/>
+      </docblock>
+      <constant namespace="GeekyHouse\ExternalTrackingBundle\Service" line="65" package="global">
+        <name>SESSION_TRACKER_PREFIX</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::SESSION_TRACKER_PREFIX</full_name>
+        <value>'_external_trackers'</value>
+        <docblock line="65">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="65" description="&lt;p&gt;SESSION_TRACKER_PREFIX The session key to store trackers&lt;/p&gt;" type="string" variable="">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </constant>
+      <property static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="35" package="global">
+        <name>$Session</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::Session</full_name>
+        <default></default>
+        <docblock line="35">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="35" description="&lt;p&gt;A Session instance&lt;/p&gt;" type="\Symfony\Component\HttpFoundation\Session\Session" variable="$Session">
+            <type>\Symfony\Component\HttpFoundation\Session\Session</type>
+          </tag>
+        </docblock>
+      </property>
+      <property static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="40" package="global">
+        <name>$EventDispatcherInterface</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::EventDispatcherInterface</full_name>
+        <default></default>
+        <docblock line="40">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="40" description="&lt;p&gt;An EventDispatcherInterface instance&lt;/p&gt;" type="\Symfony\Component\EventDispatcher\EventDispatcherInterface" variable="$EventDispatcherInterface">
+            <type>\Symfony\Component\EventDispatcher\EventDispatcherInterface</type>
+          </tag>
+        </docblock>
+      </property>
+      <property static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="45" package="global">
+        <name>$trackersCollection</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::trackersCollection</full_name>
+        <default>array()</default>
+        <docblock line="45">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="45" description="&lt;p&gt;The list of trackers registered&lt;/p&gt;" type="array" variable="$trackersCollection">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </property>
+      <property static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="50" package="global">
+        <name>$defaultEvent</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::defaultEvent</full_name>
+        <default></default>
+        <docblock line="50">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="50" description="&lt;p&gt;The default event used for tracking&lt;/p&gt;" type="string" variable="$defaultEvent">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="55" package="global">
+        <name>$event</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::event</full_name>
+        <default></default>
+        <docblock line="55">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="55" description="&lt;p&gt;The event used for tracking&lt;/p&gt;" type="string" variable="$event">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="60" package="global">
+        <name>$data</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::data</full_name>
+        <default></default>
+        <docblock line="60">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="60" description="&lt;p&gt;The datas available for tracking&lt;/p&gt;" type="string" variable="$data">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="76" package="global">
+        <name>__construct</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::__construct()</full_name>
+        <docblock line="76">
+          <description>Constructor
+Store some variables on the current instance</description>
+          <long-description></long-description>
+          <tag name="param" line="76" description="&lt;p&gt;A Session instance&lt;/p&gt;" type="\Symfony\Component\HttpFoundation\Session\Session" variable="$Session">
+            <type>\Symfony\Component\HttpFoundation\Session\Session</type>
+          </tag>
+          <tag name="param" line="76" description="&lt;p&gt;An EventDispatcherInterface instance&lt;/p&gt;" type="\Symfony\Component\HttpFoundation\Session\Session" variable="$EventDispatcherInterface">
+            <type>\Symfony\Component\HttpFoundation\Session\Session</type>
+          </tag>
+          <tag name="return" line="76" description="An ExternalTrackingManager instance" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$Session</name>
+          <default></default>
+          <type>\Symfony\Component\HttpFoundation\Session\Session</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$EventDispatcherInterface</name>
+          <default></default>
+          <type>\Symfony\Component\HttpFoundation\Session\Session</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="91" package="global">
+        <name>registerEvent</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::registerEvent()</full_name>
+        <docblock line="91">
+          <description>This methods store an array of methods for an event</description>
+          <long-description></long-description>
+          <tag name="param" line="91" description="&lt;p&gt;The event targeted&lt;/p&gt;" type="string" variable="$event">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="91" description="&lt;p&gt;The methods to invoke&lt;/p&gt;" type="array" variable="$methods">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="91" description="An ExternalTrackingManager instance" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$methods</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="109" package="global">
+        <name>setDefaultEvent</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::setDefaultEvent()</full_name>
+        <docblock line="109">
+          <description>Set the default event</description>
+          <long-description></long-description>
+          <tag name="param" line="109" description="&lt;p&gt;The default event to set&lt;/p&gt;" type="string" variable="$event">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="109" description="&lt;p&gt;Overwrite the default event if TRUE&lt;/p&gt;" type="boolean" variable="$force">
+            <type>boolean</type>
+          </tag>
+          <tag name="return" line="109" description="An ExternalTrackingManager instance" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$force</name>
+          <default>false</default>
+          <type>boolean</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="126" package="global">
+        <name>setEvent</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::setEvent()</full_name>
+        <docblock line="126">
+          <description>Set the current event</description>
+          <long-description></long-description>
+          <tag name="param" line="126" description="&lt;p&gt;The event to set&lt;/p&gt;" type="string" variable="$event">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="126" description="&lt;p&gt;Overwrite the current event if TRUE&lt;/p&gt;" type="boolean" variable="$force">
+            <type>boolean</type>
+          </tag>
+          <tag name="return" line="126" description="An ExternalTrackingManager instance" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$force</name>
+          <default>true</default>
+          <type>boolean</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="140" package="global">
+        <name>getEvent</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::getEvent()</full_name>
+        <docblock line="140">
+          <description>This method returns the current event used</description>
+          <long-description></long-description>
+          <tag name="return" line="140" description="The current event" type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="153" package="global">
+        <name>pushData</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::pushData()</full_name>
+        <docblock line="153">
+          <description>This method allows to add data on current instance.</description>
+          <long-description></long-description>
+          <tag name="param" line="153" description="&lt;p&gt;The datas to insert&lt;/p&gt;" type="array" variable="$data">
+            <type>array</type>
+          </tag>
+          <tag name="param" line="153" description="&lt;p&gt;Overwrite current datas if TRUE&lt;/p&gt;" type="boolean" variable="$force">
+            <type>boolean</type>
+          </tag>
+          <tag name="return" line="153" description="An ExternalTrackingManager instance" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$data</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$force</name>
+          <default>false</default>
+          <type>boolean</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="169" package="global">
+        <name>getData</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::getData()</full_name>
+        <docblock line="169">
+          <description>This method returns the current datas</description>
+          <long-description></long-description>
+          <tag name="return" line="169" description="The datas stored in current instance" type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="179" package="global">
+        <name>setSessionTrackers</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::setSessionTrackers()</full_name>
+        <docblock line="179">
+          <description>This method adds available trackers in session</description>
+          <long-description></long-description>
+          <tag name="return" line="179" description="An ExternalTrackingManager instance" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="192" package="global">
+        <name>getSessionTrackers</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::getSessionTrackers()</full_name>
+        <docblock line="192">
+          <description>This method returns trackers from session</description>
+          <long-description></long-description>
+          <tag name="return" line="192" description="The list of trackers in session" type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="207" package="global">
+        <name>removeSessionTrackers</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::removeSessionTrackers()</full_name>
+        <docblock line="207">
+          <description>This method removes trackers from session</description>
+          <long-description></long-description>
+          <tag name="return" line="207" description="An ExternalTrackingManager instance" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="219" package="global">
+        <name>getTrackersHTML</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::getTrackersHTML()</full_name>
+        <docblock line="219">
+          <description>This method returns a string with all trackers available for writing.</description>
+          <long-description></long-description>
+          <tag name="return" line="219" description="The trackers ready to be used on template" type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="241" package="global">
+        <name>getMethodsListByEvent</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::getMethodsListByEvent()</full_name>
+        <docblock line="241">
+          <description>This returns all methods registered for an event</description>
+          <long-description></long-description>
+          <tag name="param" line="241" description="&lt;p&gt;The event called&lt;/p&gt;" type="string" variable="$event">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="241" description="The list of methods that have to be called to get trackers" type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="259" package="global">
+        <name>getTrackersByEvent</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::getTrackersByEvent()</full_name>
+        <docblock line="259">
+          <description>Returns an array of trackers with their methods.</description>
+          <long-description></long-description>
+          <tag name="param" line="259" description="&lt;p&gt;The event sended&lt;/p&gt;" type="string" variable="$event">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="259" description="The list of trackers (HTML version) for an event that can be used on a template" type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="288" package="global">
+        <name>getTrackers</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::getTrackers()</full_name>
+        <docblock line="288">
+          <description>This method returns an array with all trackers available for writing</description>
+          <long-description></long-description>
+          <tag name="return" line="288" description="The complete list of trackers that can be used on a template" type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Service" line="321" package="global">
+        <name>mergeTrackersByEvent</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager::mergeTrackersByEvent()</full_name>
+        <docblock line="321">
+          <description>This method is an array_merge-like for array of trackers</description>
+          <long-description></long-description>
+          <tag name="param" line="321" description="&lt;p&gt;The event sended&lt;/p&gt;" type="string" variable="$event">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="321" description="&lt;p&gt;The current trackers list to merge in&lt;/p&gt;" type="array" variable="$currentTrackers">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="321" description="The list of unique trackers for an event" type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$currentTrackers</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>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</source>
+  </file>
+  <file path="ExternalTrackingBundle.php" generated-path="ExternalTrackingBundle.html" hash="64693e2485b027623715757e5aa425bb" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle" line="21" package="global">
+      <extends>\Symfony\Component\HttpKernel\Bundle\Bundle</extends>
+      <name>ExternalTrackingBundle</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\ExternalTrackingBundle</full_name>
+      <docblock line="21">
+        <description>ExternalTrackingBundle</description>
+        <long-description></long-description>
+        <tag name="author" line="21" description="Damien Jarry" link="mailto:dev.damienjarry@gmail.com"/>
+      </docblock>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJyVkM1OAzEMhO95Ch+hQt0HoIIKKJQfcWmPezGJtwlNnCjxtqwQ7066VJzKgVOkcb6xZ2bXySalmomCCaytK9A5T1DfhFkgdiCWYPEhlBn9OqPeOt7c9Gw8TStzwM70OdxhcMTwhDkPMDO0m5pReT8I801A56c6hqsjch/zaNz13oOOachuYwWQDXiniUs9gbuYA4qLfAHJE1Zt52g/ci+Pt4vX1eJgNd4rFgX2WMC4Itm99UIG9k5sndQsJfZZU11kxqMbpRgDlYRVfCDaDsvYF2pPx7xUqg5hNYQu8tDexpAiE0u7FEnPFSDf/vxsf4FmMsY8bXjsYI692NrDP6prlPZYyh++QFVmU+C45lN9qW/bJKRT</source>
+  </file>
+  <file path="Tests/bootstrap.php" generated-path="Tests.bootstrap.html" hash="a62089a1075c5accb98ad6dc88e3c4e9" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJy1U01rGzEQvetXTIOJ1sGsSnvzB/1IQlsoFIIvBcOi7I5tNbKk6iOxKf7vGa3XsV2SQw7RaaTRvHma9zT+5JaOCQFTDDGIW2tjiF66Mh/3tJUNepjAZ2VqnRqEqrr6cVNVUAIXZSnu0TTWC5mizXdzFR8xNYfiXVfch38MaDUKi/F4zK9/TTn7bROsUogQMEJyEJcIzts/WEdo0BEomlphGIBPps3Ordb2QZkF1Ha1kqYJQ/awoOpljG4oBIWUcDagL61fiKeNW0rPiBacnIAyIUqtGdFp6fVHbMtmV7aOXhmcXVITa2ZfjLFRRmVNOIpvcKFoSJvh0LcR+p/tUwvpvdwU3cMHwHNwqWUIvE/4LDhd7SdV7UuLeTJ1Ri16db66n1ee4XuYTCZArYh4lybUb4h3m+82BZzNrtcEYaSeelnf0XS+JtNoOqeGHU5ePSfjklTsxCtb6XipVk7bBgsu+ABa7lXQqsYC112CgAbQ8RrAh36/5J3Ee+hWamKIckVPClbfY9V5pcpdi7b3CZu8PMbkDcylDngA27JD/m9SHitratzRH7H/aqNPXemWbWm84mLnu+esWr7k1WN3nr3KlSZ78S2dedZa8g1M87Jn4Pz8acpzpbHCNbUjlLw5+Gf/+TkFr/XQR7JCFqQd/u7nHVnjVPbc9VjhC/EIuDiAjw==</source>
+  </file>
+  <file path="Tests/Controller/Service/TestTracker.php" generated-path="Tests.Controller.Service.TestTracker.html" hash="149ea83dfc035af174dbdde72de468ff" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service" line="25" package="global">
+      <extends/>
+      <name>TestTracker</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service\TestTracker</full_name>
+      <docblock line="25">
+        <description>Demo tracker manager</description>
+        <long-description>A demo class to show how to use the tracker manager</long-description>
+        <tag name="author" line="25" description="Damien Jarry"/>
+        <tag name="version" line="25" description="1.0"/>
+        <tag name="uses" line="25" description="ExternalTrackingManager" link="GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager"/>
+      </docblock>
+      <property static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service" line="31" package="global">
+        <name>$ExternalTrackingManager</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service\TestTracker::ExternalTrackingManager</full_name>
+        <default></default>
+        <docblock line="31">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="31" description="&lt;p&gt;An ExternalTrackingManager instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager" variable="$ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service" line="42" package="global">
+        <name>__construct</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service\TestTracker::__construct()</full_name>
+        <docblock line="42">
+          <description>Constructor
+Store some variables on the current instance
+Register some trackers by event</description>
+          <long-description></long-description>
+          <tag name="param" line="42" description="&lt;p&gt;A ExternalTrackingManager instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager" variable="$ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+          <tag name="return" line="42" description="An TestTracker instance" type="\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service\TestTracker">
+            <type>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service\TestTracker</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$ExternalTrackingManager</name>
+          <default></default>
+          <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service" line="65" package="global">
+        <name>myTracker1</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service\TestTracker::myTracker1()</full_name>
+        <docblock line="65">
+          <description>Demo tracker 1</description>
+          <long-description></long-description>
+          <tag name="param" line="65" description="&lt;p&gt;The current event when called&lt;/p&gt;" type="string" variable="$event">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="65" description="&lt;p&gt;The availables datas when called&lt;/p&gt;" type="array" variable="$data">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="65" description="The tracker" type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$data</name>
+          <default>null</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service" line="78" package="global">
+        <name>myTracker2</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service\TestTracker::myTracker2()</full_name>
+        <docblock line="78">
+          <description>Demo tracker 2</description>
+          <long-description></long-description>
+          <tag name="param" line="78" description="&lt;p&gt;The current event when called&lt;/p&gt;" type="string" variable="$event">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="78" description="&lt;p&gt;The availables datas when called&lt;/p&gt;" type="array" variable="$data">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="78" description="The tracker" type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$data</name>
+          <default>null</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service" line="91" package="global">
+        <name>myTracker3</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service\TestTracker::myTracker3()</full_name>
+        <docblock line="91">
+          <description>Demo tracker 3</description>
+          <long-description></long-description>
+          <tag name="param" line="91" description="&lt;p&gt;The current event when called&lt;/p&gt;" type="string" variable="$event">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="91" description="&lt;p&gt;The availables datas when called&lt;/p&gt;" type="array" variable="$data">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="91" description="The tracker" type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$data</name>
+          <default>null</default>
+          <type>array</type>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJzdVUtv2kAQvvtXjKJIQESgwDGPJk3oI2p6aDgiocEe8Db2rrW7NkFR/ntn1wYSCA2l6iUrWbbn+e03M7unH7M4C4L2UQBHMIiFgYlICPidobagJmBjgv6DJS0xGWgM74WcfspllFCLfZxbPWzANaaCJNyg1nM4jahoRV7yywkupimKpBWq9Lxy+ay0DzzJkwRClc21mMYWUEaQiJCkYQhyonSKVijZhCwhZFkhaOb9vn+76v+467tQHq+N0cIMDUTCWC3GuaUIZsLGrOG9GJXrkDhR5EG3g0BiSiZDFn4hup9/Vbmh4evbHA7IWDO8UtJqlSSkh3ekC0Z5EgTstUOAyn5DfYsSp6RPHP+elmtKFVinJQ1pqXVy91xC5LRhgsaAVWBiNQP38LeD4WjZdHWeF5jbmAl/USSvKEgb5hc6rQ/+n+MY4PXPW9romNslonZQbsGxOijxBo9B4NJ6Ftxy0HBrEDjcpriUW32ENBZlSFWCtn9nWhRoaWvAkw1c3AXcYHlolV6I7vibuMVS7k/UAscJk8ikuoKEudYk7Xp2+ElTblSG5d2qshkYz4EKtq/MlmTwLGK6Bx27srFMpMnmWj6vjeP0+e/rPOZjHlueZhm6eYXRKFzwVP9b1A0f8bGMz+vQTfDx+bYwZ28V7+0Yx+e6KkffkV+vUWU3spXhSMiIHjSfGLwtqjWBJwjn9WV8t0qRz9SEWjqvCOvUGs1d7LrP7RqN/cFbLtbId9F/wdlbx+neTxtz8uIk6yykaw3tjmo5hUOPlm+f1byUklnMp1WIfOZGa54eHFMToUXwnljwFVPOnhOa15zX27zKP1idnH/s6hVX9RJyswJwBpLvsfXGrZIcLCanc7ATWd13RlZ3L7K6u5HVe2dk9fYiq7ci6+k3TCkSIw==</source>
+  </file>
+  <file path="Tests/Controller/App/AppKernel.php" generated-path="Tests.Controller.App.AppKernel.html" hash="2fc051f6f3c18d982eadcfbc08572d2a" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="" line="25" package="global">
+      <extends>\Symfony\Component\HttpKernel\Kernel</extends>
+      <name>AppKernel</name>
+      <full_name>\AppKernel</full_name>
+      <docblock line="25">
+        <description>Application Kernel</description>
+        <long-description>A demo application kernel for unit test</long-description>
+        <tag name="author" line="25" description="Damien Jarry"/>
+        <tag name="version" line="25" description="1.0"/>
+        <tag name="uses" line="25" description="Kernel" link="Symfony\Component\HttpKernel\Kernel"/>
+        <tag name="uses" line="25" description="LoaderInterface" link="Symfony\Component\Config\Loader\LoaderInterface"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="33" package="global">
+        <name>registerBundles</name>
+        <full_name>\AppKernel::registerBundles()</full_name>
+        <docblock line="33">
+          <description>Returns an array of bundles to register.</description>
+          <long-description></long-description>
+          <tag name="return" line="33" description="An array of bundle instances." type="\BundleInterface[]">
+            <type>\BundleInterface[]</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="53" package="global">
+        <name>registerContainerConfiguration</name>
+        <full_name>\AppKernel::registerContainerConfiguration()</full_name>
+        <docblock line="53">
+          <description>Loads the container configuration.</description>
+          <long-description></long-description>
+          <tag name="param" line="53" description="&lt;p&gt;A LoaderInterface instance&lt;/p&gt;" type="\Symfony\Component\Config\Loader\LoaderInterface" variable="$loader">
+            <type>\Symfony\Component\Config\Loader\LoaderInterface</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$loader</name>
+          <default></default>
+          <type>\Symfony\Component\Config\Loader\LoaderInterface</type>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJyNVEtP20AQvvtXzAGJBKVOew6l0BAKLe0BkHpoqmixx/ESe9baR1IL8d87u7bTkATKXvYxz2/m2zn+VOVVFA2PIjiCu1wayGSBwHsltAWVgc0RJn8sahLFnRbJQtL8s6O0wJhtvFkv6cO5KCUSfBVa13Cc4jJOw8uDfzidl0IWcaLKk9bkQungOHNFAYmqai3nuQVBKRQyQTKcAmVKl8JKRQOoChT8tpS4CnbXV+PJj9uJdxXytbmwsBIGUmmslvfOYgoraXOWMBajnE6QA6Uh6WEUOfZ2W5eZono6VmWlCMlOL62tvjFSLKbNNnpBcawok/PptRIp6na7Ii5SJhIc+XoGmGdVxXACBmgctvjPIMVSgdiQL4IcGDQ4khYsGttqnwpnc35/VuUgWKI23vhD/D7cOVsDvN4ADTbXOrnXXLwKGrbuocxJIYzxVWhDIvOIUtOFe4wiHykUy68juEHrNBkmAjBGUXsC3geyGbAKNM65v6jjVr8zO9XBDhpernP49RvOdhwxsYwVlKDpvAzDXrl77gUzkpLQjy5W49P0+kHrMepKdtDl9bGJ0FtLAqYhnGPFYJESieaZjJjEXXUb79MLLUpcKb3Yf+/1B//zcIuJ09LWe69vsL9byfnOca8d/06pdhLnEaHFOrhX2Sfadshl+l63bfMNbki/FfEL4qK+VEzM6f5B9MLzZrD+KFqfW7J0DRwFwdMOFz2hTZg2iSIrJKH2J/4CTocvu8NCHpmi3P4IcFCEB/7z25KOiW/i4bhLYryZQ++FaNts5UL/REgVHVquKQ/HMDEntJRaUcm/G4x1WTaAB2d47BO2UP/RvfH77sTvvdns/OpmNosPh41aXJfFYX9dyafoL3wzBwI=</source>
+  </file>
+  <file path="Tests/Controller/Controller/IndexController.php" generated-path="Tests.Controller.Controller.IndexController.html" hash="4392cea02be181b45fafe9e5b6aebcc8" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller" line="27" package="global">
+      <extends>\Symfony\Bundle\FrameworkBundle\Controller\Controller</extends>
+      <name>IndexController</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller\IndexController</full_name>
+      <docblock line="27">
+        <description>Index controller</description>
+        <long-description>A demo controller for unit test</long-description>
+        <tag name="author" line="27" description="Damien Jarry"/>
+        <tag name="version" line="27" description="1.0"/>
+        <tag name="uses" line="27" description="Controller" link="Symfony\Bundle\FrameworkBundle\Controller\Controller"/>
+        <tag name="uses" line="27" description="Template" link="Sensio\Bundle\FrameworkExtraBundle\Configuration\Template"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller" line="39" package="global">
+        <name>indexAction</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller\IndexController::indexAction()</full_name>
+        <docblock line="39">
+          <description>Controller for index action</description>
+          <long-description></long-description>
+          <tag name="Template" line="39" description="(&quot;@test_views/index.html.twig&quot;)"/>
+          <tag name="param" line="39" description="&lt;p&gt;A name to show on the page&lt;/p&gt;" type="string" variable="$name">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="39" description="An array of variables" type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$name</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller" line="51" package="global">
+        <name>indexResponseAction</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller\IndexController::indexResponseAction()</full_name>
+        <docblock line="51">
+          <description>Controller for indexResponse action</description>
+          <long-description></long-description>
+          <tag name="param" line="51" description="&lt;p&gt;A name to show on the page&lt;/p&gt;" type="string" variable="$name">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="51" description="A Response instance" type="\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller\Response">
+            <type>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller\Response</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$name</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJytVN9v0zAQfs9fcZomra1GCs8dpaV0MIR4YH2shK7JJTF17Mh22kXT/nfObrKGMmCauBdfzvfdj+98uXpXFVUUjUcRjGBVCAuZkAR8Vmgc6AxcQbC8c2QUypXBZCtU/r5WqaSYMR42SIbwAUtBCj6jMQ1cpbSL02D54Q2zvEQh40SX0xZyrU0InNVSQqKrxoi8cIAqBSkSUpZLUJk2JTqh1SVUkpBtO0H7gPtys1h+vV36UKFeV6CDPVpIhXVGbGpHKeyFK/iGe7G6NglxojQUPY4ihSXZCtn4kWjbfNK1pfXTba5XZJ1dL7RyRktJpqdOooiBcNuUmVbNugVcG46+12bbfv8BGpDcq9C/AbkSg0d0JvLaBCq4mLKS6Gjihxa4vFEp3XFvXeCW4jmkVOqeHZhPqJVw4Lih1muGtSvY/ssAw8WODFem4E38OnxztRZYXtIrBFn0S+wFfCkF0ClhpIlEaw9k9BITj1Sltp/7Pop82sCel1HvMnAkAqGY+GStS+c561IOzmaexe/+RdpxQMSFK2Xs9iI/G57CeJmwBP80VQ7n/vHxfMLhNNhC74GZ9g+7wpxOwYZcbRTwZLCBeafwau7QCNxIsq3rOJxVveEd4tVSoYNDO/OgD0LqQ3X3BxBLP/7gwntcwNvpoczhJLg9PIuzb7xS2u/u09z9DxIeU8yPqlDWoUro3yx0kGewce5/HK+mhl8Pmb9P+7Kl7jGElxMeH++GR0Yfop9XscTe</source>
+  </file>
+  <file path="Tests/Controller/EventListener/CustomListener.php" generated-path="Tests.Controller.EventListener.CustomListener.html" hash="db24bb6dea712de40c7ecff9bf8b34fa" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener" line="27" package="global">
+      <extends/>
+      <implements>\Symfony\Component\EventDispatcher\EventSubscriberInterface</implements>
+      <name>CustomListener</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener\CustomListener</full_name>
+      <docblock line="27">
+        <description>Demo tracker manager</description>
+        <long-description>A demo class to show how to use the tracker manager</long-description>
+        <tag name="author" line="27" description="Damien Jarry"/>
+        <tag name="version" line="27" description="1.0"/>
+        <tag name="uses" line="27" description="ExternalTrackingEvent" link="GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent"/>
+        <tag name="uses" line="27" description="EventSubscriberInterface" link="Symfony\Component\EventDispatcher\EventSubscriberInterface"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener" line="36" package="global">
+        <name>__construct</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener\CustomListener::__construct()</full_name>
+        <docblock line="36">
+          <description>Constructor
+Does nothing but it's here. Yeah, really.</description>
+          <long-description></long-description>
+          <tag name="return" line="36" description="A CustomListener instance" type="\GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener\CustomListener">
+            <type>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener\CustomListener</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener" line="45" package="global">
+        <name>beforeGetTrackers</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener\CustomListener::beforeGetTrackers()</full_name>
+        <docblock line="45">
+          <description>Add some tracking datas when 'geekyhouse.event.before_get_trackers' is dispatched</description>
+          <long-description></long-description>
+          <tag name="param" line="45" description="&lt;p&gt;An ExternalTrackingEvent instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent" variable="$event">
+            <type>\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener" line="57" package="global">
+        <name>afterGetTrackers</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener\CustomListener::afterGetTrackers()</full_name>
+        <docblock line="57">
+          <description>Add some tracking datas when 'geekyhouse.event.after_get_trackers' is dispatched</description>
+          <long-description></long-description>
+          <tag name="param" line="57" description="&lt;p&gt;An ExternalTrackingEvent instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent" variable="$event">
+            <type>\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener" line="81" package="global">
+        <name>getSubscribedEvents</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener\CustomListener::getSubscribedEvents()</full_name>
+        <docblock line="81">
+          <description>Returns an array of event names this subscriber wants to listen to.</description>
+          <long-description>The array keys are event names and the value can be:
+
+* The method name to call (priority defaults to 0)
+* An array composed of the method name to call and the priority
+* An array of arrays composed of the method names to call and respective
+priorities, or 0 if unset
+
+For instance:
+
+* array('eventName' =&gt; 'methodName')
+* array('eventName' =&gt; array('methodName', $priority))
+* array('eventName' =&gt; array(array('methodName1', $priority), array('methodName2'))</long-description>
+          <tag name="return" line="81" description="The event names to listen to" type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJzNVktv2kAQvvtXzCGSISJO0mNJaWhI01RpDg2XSkhoscd4G3vX2l1DrSj/vbNrm4AhCX1IrSWwmfX3zXuGs/d5knve8aEHhzBOuIaYpwh0z5kyIGMwCcLlD4NKsHSsWHjPxfxDIaIUA8JYWCfswohlHAV8ZkqVcBbhIoic5LsVnM8zxtMglNmghnyUyhHHRZpCKPNS8XligIkIUh6i0GSCiKXKmOFS9CBPkZFswXHpcDfXF5e3d5eWytlrEmZgyTREXBvFZ4XBCJbcJHRCvmhZqBBJUeSMPvY8wTLUOSPhFeJ9+UkWGie73ZyMURs9uZDCKJmmqCaXCxTmhjShQNX3PMLuQeNQW4dO2ncUd2UWS1GSpiyXwr1sD0ecDDVh0ii+K2Y6JB9RXQviismJvs2gC+wIMwnGcqOCjAk2R1XHfAiRPQxTpjUYCTqRS7AferbqbVx3I89ZYRLK2EaW3cEClaYEwWlw4n4Tjwa6/igaW+XmpBv8vx8qi37uzJVGFZ+LQhuZNTkGnlEFZoTSz4MfPM+Su0TY6xCoZKgai9BI1YhGkhwQkqpSzIHKFLjxNZDBGMA3ZEkPFLI0LYMa0ODOFZpCibZdwy1DSSMT1hWHO3b3vJhRV1GzidC2E0ynYWNZp+veeHDfj1seDKOImierC8PaHDFDbbZMqAz8uc1yYrMcoI1KMEPqWZzO0UzrStK+nSVRk5eo7RZNGZbtTjgcOFIYimfO9/K1MukKzbg2qPOSsvVo2KuSHg3IozbsS9Uine7RIC90MqK4dKgvWNlZoe3lO4ZpZYYP7wbg6yIMUWt/9V632/878Wcx2fhfhd9Z9M+j76z45eB/dS2naSuBo7bbsIqJ2x71allNAto/dj7QNE1dN9JT08W0WbHmuMeSGBVuMNm9Z8fvgqUFrSlmy/ZtK1cVSYY0iSMHs5pCmhXQyRWXipuSBnzMirQy4qT7hBw2HoR2XmrajfVi30XXGNOw7qAhtHvQLxHqDUZF6xapJhZNvTT8HHUPaLmcAI+hoM1vWo7b/wpNrW0HpUp6ledb0lpluTLD/e6+8m4tXEP04KDxvbsfeovjdIOkt63kjb+ibo/4KsQ22RvFtlZWuzqO4mPWG496ZrWkItdkutPur3WFrb7Zb7S7WG9NWL/3CteuMVVxtcfFGtVTmz56PwGQa3Uq</source>
+  </file>
+  <file path="Tests/ExternalTrackingTest.php" generated-path="Tests.ExternalTrackingTest.html" hash="196d555895f8eacbf92dd3ab1eadbcd2" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle\Tests" line="26" package="global">
+      <extends>\Symfony\Bundle\FrameworkBundle\Test\WebTestCase</extends>
+      <name>ExternalTrackingTest</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\ExternalTrackingTest</full_name>
+      <docblock line="26">
+        <description>ExternalTrackingTest</description>
+        <long-description>This class tests ExternalTrackingBundle features</long-description>
+        <tag name="author" line="26" description="Damien Jarry"/>
+        <tag name="version" line="26" description="1.0"/>
+        <tag name="uses" line="26" description="WebTestCase" link="Symfony\Bundle\FrameworkBundle\Test\WebTestCase"/>
+        <tag name="uses" line="26" description="Client" link="Symfony\Bundle\FrameworkBundle\Client"/>
+      </docblock>
+      <property static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Tests" line="32" package="global">
+        <name>$client</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\ExternalTrackingTest::client</full_name>
+        <default></default>
+        <docblock line="32">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="32" description="&lt;p&gt;A Client instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Tests\Client" variable="$client">
+            <type>\GeekyHouse\ExternalTrackingBundle\Tests\Client</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests" line="37" package="global">
+        <name>testDefaultEvent</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\ExternalTrackingTest::testDefaultEvent()</full_name>
+        <docblock line="37">
+          <description>Test default event on tracking manager</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests" line="56" package="global">
+        <name>testEvent</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\ExternalTrackingTest::testEvent()</full_name>
+        <docblock line="56">
+          <description>Test custom event on tracking manager</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests" line="73" package="global">
+        <name>testDefaultData</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\ExternalTrackingTest::testDefaultData()</full_name>
+        <docblock line="73">
+          <description>Test default datas on tracking manager</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests" line="90" package="global">
+        <name>testData</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\ExternalTrackingTest::testData()</full_name>
+        <docblock line="90">
+          <description>Test custom datas on tracking manager</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests" line="122" package="global">
+        <name>testTracker</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\ExternalTrackingTest::testTracker()</full_name>
+        <docblock line="122">
+          <description>Test trackers writing on template</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests" line="142" package="global">
+        <name>testEventDispatcher</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\ExternalTrackingTest::testEventDispatcher()</full_name>
+        <docblock line="142">
+          <description>Test custom event listeners</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Tests" line="162" package="global">
+        <name>setUp</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\ExternalTrackingTest::setUp()</full_name>
+        <docblock line="162">
+          <description>Setup the current application for test</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Tests" line="172" package="global">
+        <name>initClient</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Tests\ExternalTrackingTest::initClient()</full_name>
+        <docblock line="172">
+          <description>Create a client</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJzlWFtv2zYUftevOCgKyC4Sp0n3lLReN8dtN6zDgHjYw1IEDHVkcZEolRe7btH/vkOKTnyrL4kduJteZPPy8TsfPx6RfPljlVVRdPQsgmfQy4SGVOQI9K6YMlCmYDKE7ieDSrK8pxi/EbL/s5VJji3q47o1eBPOWSFQwq9MqRG8THDQSnzJP67gdb9gIm/xsmiHLm9K5YFTm+fAy2qkRD8zwGQCueAoNVGQaakKZkQpD6DKkVHZQODQ9/vtl07394uug/J8TcYMDJmGRGijxLU1mMBQmIxqKBZdWsWRBko86aMokqxAXTEqfIt4M3pXWo2Xi8O87KE2+iyKqAlcjIq0lKPLUPVGEc6wVDcTTS//wmv37hDjMyetj3gW27UIYnjZec60BuOG+obckCIzVqEO3V4zazLScUp7XzFApUk2OG499/+JuAZ6NiQPE783wenkRMfA3VMXeOHrMBeJAUiFMtFTo36JIgfgNXSPC46pAAhPef3+aVwgpDZMcgyNj/y7UmLADI5bn81B+tETTJnNicXAAZF4JnCDgknWRzWNaa/Jp2RfyZ1B/byd1whdB9Bo+mZforEET50PD9tCClNzbTQDEV87K8j7ekx4Ne5Ycz9s99F0SmmYkKgaTf+/EWPofTXm3Aqc43UGOWxrnCYfu3CuvBLHDmImCJpBVKb70bJcT7c9WDIIMQ3SPJjUCQ1klMX1qZ3chxpXbJgvmgSFHy1BN+K33R4Bx0f1CvQLcAO9NiDl0L4uNi632pTFA3y7v4bdzQTMDX4lZIKftm3eOddOEdu1t7ZirXFOTJihT+sDcuI5AeyRw5Zp+PwAtPiMZdpYql8d0SPkixf35+OmzZFZ3W+FrSbpHtS4f8duBxV/WCs3PcA//wvjfLN9ZXXmO5D0bNSIs5I0h1dtiGnPRfucuLmC1PGjkvqDKaF3yWlrjg7y3ZrZx/BhS/GvtTnZBxVqvstE2ElK+2EPQr93SvNpgc5XMFTCuFTmM1VR5XTEWJnOenXnTTPa+rNAp8OqpNPzJtNBThyPcNim0zQpS6Y2RX7K6+yoG08CcTh+0owpU/LSTuwetgF8Mgu8T9n+MbZ53+3MvVgEvM5ZJReaDvy0lNY7oZwLXTHDs82Xz/e3IfjP7iS15Rz1xDfHW+HqGtNSzX57dj0oSwl3Sbq/QGMrf9vIrVLOsayqyJv+ShJSd4Pp7/CWmJfyw5/VnF0r5tBOT0Ptqly3mF1HobvUYsDD5dokjXDjdctjEnDx2gk3aXeG8/DTJOaar1gxtwvG6RS+m/FdQF+jfwFrbwvL</source>
+  </file>
+  <file path="DependencyInjection/ExternalTrackingExtension.php" generated-path="DependencyInjection.ExternalTrackingExtension.html" hash="6f67d15e62d048fd25fb9970815996ca" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle\DependencyInjection" line="22" package="global">
+      <extends>\Symfony\Component\HttpKernel\DependencyInjection\Extension</extends>
+      <name>ExternalTrackingExtension</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\DependencyInjection\ExternalTrackingExtension</full_name>
+      <docblock line="22">
+        <description>DI extension</description>
+        <long-description></long-description>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\DependencyInjection" line="28" package="global">
+        <name>load</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\DependencyInjection\ExternalTrackingExtension::load()</full_name>
+        <docblock line="28">
+          <description>{@inheritDoc}</description>
+          <long-description></long-description>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$configs</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$container</name>
+          <default></default>
+          <type>\Symfony\Component\DependencyInjection\ContainerBuilder</type>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJylU9tu2zAMffdX8KFALkjtD0iXFU3SNVsxDG0fBiyDocpMrFaWPEluagT999GS57ZJugumFycUz+EheXTyvszLKEqGEQzhJhcWVkIi0LdkxoFegcsR5o8OjWLyxjB+L9T6rFKZxJgwDazPBzBjhUAFH5kxNZxk+BBnPnLXBE7XBRMy5rqYtJBzbTzxqpISuC5rI9a5A6YykIKjsiRBrbQpmBNajaCUyCj2IHDjcZeL6fzz9byh8npdzhxsmIVMWGfEbeUwg41wOd1QL1ZXhiMVyrzoJIoUK9CWjIIfEO/rC11ZXB5ucznDElWGitcLdYe8UTSOIgLAdV2stKqXU12UWqFy9EutxHp5TqIuNWdOm/EbmQdYG7RjQqE5q4TM8J+wl5r9BnHhXPmJmkN5ENx0rmxoLBn6Fc0WgL+ifmZcMmv3rNAhQ3YWMgJqG0VAxxM2ZwjbU6FyNMLNNH9qg4n/ltUtbZ4MobwikNROn8zDajjifqh2BLvz8VchMvAs28BJpwVVxjsI3oEi60xfxvqD8W42pR01hjmelEZztPY14DXnqBNGRM9M0u+hLRiWsvxayOCI5l//WfTIJ70wSz9NZ4urNIUYekkcJ1cYrGuTUKo3eCk6lDqe+Fn1sN1M6trVxI+F7L2dL+mpIIn4Q5rbiI7p1bxCC8cTi+4LM/SeqPwhFQVTbE1lvH963dS+9dqLNFx831nH39Ib/FGhdWnXzl6d3Yz/LOgH0j2N/XLd1U6dpyh6+gnRE9h1</source>
+  </file>
+  <file path="DependencyInjection/Configuration.php" generated-path="DependencyInjection.Configuration.html" hash="db7e0658bdfcde867e7cc6d11b1c26c1" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle\DependencyInjection" line="23" package="global">
+      <extends/>
+      <implements>\Symfony\Component\Config\Definition\ConfigurationInterface</implements>
+      <name>Configuration</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\DependencyInjection\Configuration</full_name>
+      <docblock line="23">
+        <description>Bundle configuration</description>
+        <long-description></long-description>
+        <tag name="author" line="23" description="Damien Jarry" link="mailto:dev.damienjarry@gmail.com"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\DependencyInjection" line="29" package="global">
+        <name>getConfigTreeBuilder</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\DependencyInjection\Configuration::getConfigTreeBuilder()</full_name>
+        <docblock line="29">
+          <description>{@inheritDoc}</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJy1VE1vGjEQvftXzKESBDXwA0gpItCWKs2hoJyQkOOdZZ14x1uvDV0h/ntnP0qgpKWVqC/2zswbv5l53pv3WZIJ0esI6MA80TnE2iDwnknnwcbgE4TJd4+OpJk7qZ41rUaBIoNdxpSwtrqCsUw1EnyWzhVwE+G6G1WWp9IwXKVSm66y6aCBfLCuShwHY0DZrHB6lXiQFIHRCilnChRbl0qvLb2FzKBk21rjpsLdTW8n97NJmari6xPpYSNziHTunX4MHiPYaJ+wh2vJbXAK+aKoIt0TgmSKeSbZ+BHxufhkQ46L18tcjDFDipBUMaUnVCWjvhAMgFmRxpaKxa1NM0tInk8U6xVDYk26jFyMgjYRusXcITbn/l+Da0twVRumxPRi5lzjzxOfrDnrHXcEiQl8xW8B8/13v5x6NYw6mrtzcFczp6EMPuFZ/cN4e0IZmedwRB10yiNMmc4vjn1NYisE8Ko4lasD26GmBJ32Y6t2jbFX7Vl4ZJmweqiaBqzQ11kPmty+qkK3NZDXG//ihHdALKWj8P5LpLPW37NYOOwQdT0oHe0WNu1e+qbfLQafoveWcl0PVMJJHFJD7NiZK2mkK1HtVipJrtAtqz62TqNrRISxDMY/SBMYc14MM3Rrflon7i/1bb+9R0ki60c4STNfvMqdH8fZmlwtvqVp1Hfh4v6o9P9cWqkGylmGF65pvuF/weRn8pOoveei5TW2Azk79MHR0TuoX8pOiJ34AfsK8tw=</source>
+  </file>
+  <file path="EventListener/RequestListener.php" generated-path="EventListener.RequestListener.html" hash="1031469e4333bf9370627a93df02817d" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle\EventListener" line="36" package="global">
+      <extends/>
+      <implements>\Symfony\Component\EventDispatcher\EventSubscriberInterface</implements>
+      <name>RequestListener</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener</full_name>
+      <docblock line="36">
+        <description>RequestListener</description>
+        <long-description>This class set custom actions on events listeners</long-description>
+        <tag name="author" line="36" description="Damien Jarry"/>
+        <tag name="version" line="36" description="1.0"/>
+        <tag name="uses" line="36" description="ExternalTrackingManager" link="GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager"/>
+        <tag name="uses" line="36" description="GetResponseEvent" link="Symfony\Component\HttpKernel\Event\GetResponseEvent"/>
+        <tag name="uses" line="36" description="FilterControllerEvent" link="Symfony\Component\HttpKernel\Event\FilterControllerEvent"/>
+        <tag name="uses" line="36" description="FilterResponseEvent" link="Symfony\Component\HttpKernel\Event\FilterResponseEvent"/>
+        <tag name="uses" line="36" description="GetResponseForControllerResultEvent" link="Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent"/>
+      </docblock>
+      <property static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\EventListener" line="42" package="global">
+        <name>$ExternalTrackingManager</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener::ExternalTrackingManager</full_name>
+        <default></default>
+        <docblock line="42">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="42" description="&lt;p&gt;An ExternalTrackingManager instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager" variable="$ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\EventListener" line="52" package="global">
+        <name>__construct</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener::__construct()</full_name>
+        <docblock line="52">
+          <description>Constructor
+Store some variables on the current instance</description>
+          <long-description></long-description>
+          <tag name="param" line="52" description="&lt;p&gt;A ExternalTrackingManager instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager" variable="$ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+          <tag name="return" line="52" description="A RequestListener instance" type="\GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener">
+            <type>\GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$ExternalTrackingManager</name>
+          <default></default>
+          <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\EventListener" line="64" package="global">
+        <name>onKernelRequest</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener::onKernelRequest()</full_name>
+        <docblock line="64">
+          <description>Allows to create a response for a request
+Call setResponse() to set the response that will be returned for the current request.</description>
+          <long-description>The propagation of this event is stopped as soon as a response is set.</long-description>
+          <tag name="param" line="64" description="&lt;p&gt;A GetResponseEvent instance&lt;/p&gt;" type="\Symfony\Component\HttpKernel\Event\GetResponseEvent" variable="$event">
+            <type>\Symfony\Component\HttpKernel\Event\GetResponseEvent</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>\Symfony\Component\HttpKernel\Event\GetResponseEvent</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\EventListener" line="77" package="global">
+        <name>onKernelController</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener::onKernelController()</full_name>
+        <docblock line="77">
+          <description>Allows filtering of a controller callable
+You can call getController() to retrieve the current controller.</description>
+          <long-description>With setController() you can set a new controller that is used in the processing of the request.
+Controllers should be callables.</long-description>
+          <tag name="param" line="77" description="&lt;p&gt;A FilterControllerEvent instance&lt;/p&gt;" type="\Symfony\Component\HttpKernel\Event\FilterControllerEvent" variable="$event">
+            <type>\Symfony\Component\HttpKernel\Event\FilterControllerEvent</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>\Symfony\Component\HttpKernel\Event\FilterControllerEvent</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\EventListener" line="90" package="global">
+        <name>onKernelView</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener::onKernelView()</full_name>
+        <docblock line="90">
+          <description>Allows to create a response for the return value of a controller
+Call setResponse() to set the response that will be returned for the current request.</description>
+          <long-description>The propagation of this event is stopped as soon as a response is set.</long-description>
+          <tag name="param" line="90" description="&lt;p&gt;A GetResponseForControllerResultEvent instance&lt;/p&gt;" type="\Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent" variable="$event">
+            <type>\Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>\Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\EventListener" line="112" package="global">
+        <name>onKernelResponse</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener::onKernelResponse()</full_name>
+        <docblock line="112">
+          <description>Allows to filter a Response object
+You can call getResponse() to retrieve the current response.</description>
+          <long-description>With setResponse() you can set a new response that will be returned to the browser.</long-description>
+          <tag name="param" line="112" description="&lt;p&gt;A FilterResponseEvent instance&lt;/p&gt;" type="\Symfony\Component\HttpKernel\Event\FilterResponseEvent" variable="$event">
+            <type>\Symfony\Component\HttpKernel\Event\FilterResponseEvent</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$event</name>
+          <default></default>
+          <type>\Symfony\Component\HttpKernel\Event\FilterResponseEvent</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\EventListener" line="135" package="global">
+        <name>getSubscribedEvents</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\EventListener\RequestListener::getSubscribedEvents()</full_name>
+        <docblock line="135">
+          <description>Returns an array of event names this subscriber wants to listen to.</description>
+          <long-description>The array keys are event names and the value can be:
+
+* The method name to call (priority defaults to 0)
+* An array composed of the method name to call and the priority
+* An array of arrays composed of the method names to call and respective
+priorities, or 0 if unset
+
+For instance:
+
+* array('eventName' =&gt; 'methodName')
+* array('eventName' =&gt; array('methodName', $priority))
+* array('eventName' =&gt; array(array('methodName1', $priority), array('methodName2'))</long-description>
+          <tag name="return" line="135" description="The event names to listen to" type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJzdWFtv2zYUfvev4IAAlovETveYtFnTJG3SdUURBy0GGAho6dhmI5EaSdkziv73nUNKsixLju2+bNOLLZLn/p0L9eq3dJZ2OoMXHfaCPcyEYRMRA8PflGvL1ITZGbCbvy1oyeMHzcMnIadvMxnF0EcaIgvCHrvmiQDJPnCtl+xVBPN+5Fa+0cKbacJF3A9VcpGTvFPaMZ5kccxClS61mM4s4zJisQhBGlRBTpROuBVKHrM0Bo5rcwELR/fx7urm0/CGWDl97YxbtuCGRcJYLcaZhYgthJ3hDtpiVKZDQEGRU3rQ6UiegEk5Lr4HeFreqszAqNnM0c0cpP2IjEGCPu908OgOVEPQczRlY/sPLvmU+BCb4TKZKLkcXakkVRLFjG6tTX9HAoi93NF7sPeoqkKfuIWdCd+JGCVfKWm1imPQh1AfJrmiMgZ6pQEuZrHNeT3PzP+446ZNttu9FhhKG85A+/dhNjYhogD0nUQjJhjmc8K4g949/JWBKeOZA9JBP4y5QbCAZWFmrEoYDwl+hinJwKmB6PRkJqd7wzM7QzCvJYDbmOMhJGYv+6fuHfU3DJ+fRg5zT8vmmqgD0MUanvqZfWU0ArEmo/HMYYK229Nw5id81gZvtsMZV4g85GqYZCLBgpc4wLUBuvO90yF9HarpIchx3YYLdtS2cSlbaYQ0lkuU5QUM3G+qxZxbaGV4vqEXWo9FOQut0sXSEP8DluUEazrXgo9jcFlGtT3MtCYX1qSXVmJj4skBdu5qZilIg8203AjO5Wa4Gv2UjbGVYYeTroiwx8ew8EOwr/I9x/F7pwDxEXW1k4s2Nq+3BIfIf2yE6DKO1cIwq1iogaLLmc7hy7ANu1dncxlTjo3brEAe9IiYSieFsKT1fVng2TGtkj+xMU/y7l9EOufdL5g/4F6qVcqnrv37KQTrs6vBNJtgcU5TZMSpteMB/K0oLFwN7zfjZqPgHXmul5s7O4VVSV8bckwELfyLCG73/8QVJwwXmcxxXinKBgvR35QlBcGfKsM16dbZFOyqwvhIoK+1QMlrfl7xK139lWYkU6Nf5swpnJxJnLkqmriQoouxYEboIicAgxWCMbniHgHrIV3xx+DMVBZHhIjCKtMSrObOUUaseXuvsFXs3iasnoCDAbuT3yAk/0Qw4VjTmc1TzcN0x1w9uUAnX3sOTmDgBZ5cTAlIHlM99xZ0H7XCwbbb6x2axj4yrqrNeZxBHWb/p+xubc1NCd96eC8wfcHrSbC7CltAhS61gEMAxhDvNNyiCzDVprEac9xZiGnZNqvUg19G7C0suHaB/Xz7mSWQKL3s7wzGNDOzaxRXRWHdhIDw9+/JhKomt4CmF9ULUA7eJx22EsApPSIQ8yjyc0ehrPeuap2C1gQMqSLO8TJLrvd2UkUTVCsNjfv7GDv0JA85l2CHtPYNAl1dQIypMTm/rS2sJ3BjUygSa6MlVGg3G8IzNQCFkYyxRr1X3aaxurd046bNPRtyrn67mP9IVb93XsUiiKVQa76k5PZucl8x8k8c5RWBLThdHDAE/rKK/9Zqr+fxBEvkiOlS5cRdvkDeHCjiYzirBc8zyROKyFy7IbwFeDVQWthl4TynxGlvRXlZWBDS7YoGiHxcaGJXKFNwbWBD7Yv+mG0MzRpHAi5GWMzLUSrnL8AcM2xdp0xMWIZIsTXD6ZtVgcBNpzg9gq7z5ieU2mWvL1jXq+Hee8+czRcrFMfsqLC9txv1Bo+Xa0yON4X82i1Z1+893sUU7DWwVWDVlIfoH1tNR4R4eXuN/LecoJ53VYFBuUpP9RPQ2dmXu5uvzq3Vhts9LilWGfSj8w93Ne9Y</source>
+  </file>
+  <file path="Event/ExternalTrackingEvent.php" generated-path="Event.ExternalTrackingEvent.html" hash="baa2a3e4b5a46d09c2d09572d41fc70c" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle\Event" line="27" package="global">
+      <extends>\Symfony\Component\EventDispatcher\Event</extends>
+      <name>ExternalTrackingEvent</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent</full_name>
+      <docblock line="27">
+        <description>External Tracking Event</description>
+        <long-description>This class manage datas sent with an EventDispatcher</long-description>
+        <tag name="author" line="27" description="Damien Jarry"/>
+        <tag name="version" line="27" description="1.0"/>
+        <tag name="uses" line="27" description="Event" link="Symfony\Component\EventDispatcher\Event"/>
+        <tag name="uses" line="27" description="ExternalTrackingManager" link="GeekyHouse\ExternalTrackingBundle\ExternalTrackingManager"/>
+      </docblock>
+      <property static="false" visibility="protected" namespace="GeekyHouse\ExternalTrackingBundle\Event" line="33" package="global">
+        <name>$ExternalTrackingManager</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent::ExternalTrackingManager</full_name>
+        <default>null</default>
+        <docblock line="33">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="33" description="&lt;p&gt;An ExternalTrackingManager instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager" variable="$ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Event" line="43" package="global">
+        <name>__construct</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent::__construct()</full_name>
+        <docblock line="43">
+          <description>Constructor
+Store some variables on the current instance</description>
+          <long-description></long-description>
+          <tag name="param" line="43" description="&lt;p&gt;An ExternalTrackingManager instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager" variable="$ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+          <tag name="return" line="43" description="An ExternalTrackingEvent instance" type="\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent">
+            <type>\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$ExternalTrackingManager</name>
+          <default></default>
+          <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Event" line="53" package="global">
+        <name>getExternalTrackingManager</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Event\ExternalTrackingEvent::getExternalTrackingManager()</full_name>
+        <docblock line="53">
+          <description>This method returns ExternalTrackingManager instance</description>
+          <long-description></long-description>
+          <tag name="return" line="53" description="An ExternalTrackingManager instance" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>eJy1VE1v2zAMvftX8NBDWmzJdk7XdUuzL2y7pMcABSMzsVZLMig5WVD0v4+S7RaL460rMF2c8OPp8ZHU+duqqLJscpbBGVwX2sNalwTyrZADuDWEgmD+MxBbLK8Z1a22m/e1zUsaS05MG6lTuEKjycIXZN7DeU7bcZ4sP6LhcmNQl2PlzEWb8sFxAl7XZQnKVXvWmyIA2hxKrch6oWDXjg0G7ewLqEpCsW017VLe18+z+ffFPEIlvqHAADv0kGsfWK/qQDnsdCjEI7V4V7MiuShPpCdZZtGQr1CMH4lu959c7Wl5vMzlfEs2TLNMQmCxN2tn98uZM5WzYm+8V1rAgiqIu+gY/HfoBfFW6u25v6HFDfE0diYJ1gVAFwHpnlbO1DhVovdgUibkGEQNLyGNDGjhgGibeol1KKQbv3UwObbEXsSH1+NX6b+U4UHOEyWA/ukoP2I9QfzjyvRGsrWn7jZKHEY0rEisNvctl7ssizSSyPHEsnEQHE6GHO/sYI62PqBV1F4wSd+KXSAVh3QQ8g1YWY5pj+DMCSDXKjjuTAv5TTLkRjYEWeOqFHWlc3FTVM0c6z6g8VCurDma/1nww01MoeZ+WtOWI3iN47h89UqeCXk9rIrvA9zcqE6V0b+WcpoQ77JuSE/ii/HyYrgtQ0DTBHHfa1haTkOyZTk0GvRn85naPXv8DvTbUBjIHx3K0zL5s0oPUtxnvwBlzCLB</source>
+  </file>
+  <file path="Twig/Extension/ExternalTrackingExtension.php" generated-path="Twig.Extension.ExternalTrackingExtension.html" hash="9bd932031cd03842c365fc8fed6b42d4" package="global">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="GeekyHouse\ExternalTrackingBundle\Twig\Extension" line="27" package="global">
+      <extends>\Twig_Extension</extends>
+      <name>ExternalTrackingExtension</name>
+      <full_name>\GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension</full_name>
+      <docblock line="27">
+        <description>ExternalTrackingExtension</description>
+        <long-description>This class define Twig functions to display tracking</long-description>
+        <tag name="author" line="27" description="Damien Jarry"/>
+        <tag name="version" line="27" description="1.0"/>
+        <tag name="uses" line="27" description="ExternalTrackingManager" link="GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager"/>
+        <tag name="uses" line="27" description="Twig_Extension" link="Twig_Extension"/>
+      </docblock>
+      <property static="false" visibility="protected" namespace="GeekyHouse\ExternalTrackingBundle\Twig\Extension" line="33" package="global">
+        <name>$ExternalTrackingManager</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension::ExternalTrackingManager</full_name>
+        <default></default>
+        <docblock line="33">
+          <description></description>
+          <long-description></long-description>
+          <tag name="var" line="33" description="&lt;p&gt;An ExternalTrackingManager instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager" variable="$ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Twig\Extension" line="43" package="global">
+        <name>__construct</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension::__construct()</full_name>
+        <docblock line="43">
+          <description>Constructor
+Store some variables on the current instance</description>
+          <long-description></long-description>
+          <tag name="param" line="43" description="&lt;p&gt;A ExternalTrackingManager instance&lt;/p&gt;" type="\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager" variable="$ExternalTrackingManager">
+            <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+          </tag>
+          <tag name="return" line="43" description="An ExternalTrackingExtension instance" type="\GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension">
+            <type>\GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$ExternalTrackingManager</name>
+          <default></default>
+          <type>\GeekyHouse\ExternalTrackingBundle\Service\ExternalTrackingManager</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Twig\Extension" line="51" package="global">
+        <name>getName</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension::getName()</full_name>
+        <docblock line="51">
+          <description>{@inheritdoc}</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Twig\Extension" line="59" package="global">
+        <name>getFunctions</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension::getFunctions()</full_name>
+        <docblock line="59">
+          <description>{@inheritdoc}</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="GeekyHouse\ExternalTrackingBundle\Twig\Extension" line="74" package="global">
+        <name>getExternalTrackers</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension::getExternalTrackers()</full_name>
+        <docblock line="74">
+          <description>This method returns HTML formatted trackers</description>
+          <long-description></long-description>
+          <tag name="param" line="74" description="&lt;p&gt;Define if the trackers have to wait until DOM is loaded&lt;/p&gt;" type="boolean" variable="$documentReady">
+            <type>boolean</type>
+          </tag>
+          <tag name="param" line="74" description="&lt;p&gt;Define a delay before write the trackers&lt;/p&gt;" type="integer" variable="$delay">
+            <type>integer</type>
+          </tag>
+          <tag name="return" line="74" description="The HTML trackers (escaped format, use &quot;raw()&quot;)" type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$documentReady</name>
+          <default>true</default>
+          <type>boolean</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$delay</name>
+          <default>500</default>
+          <type>integer</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Twig\Extension" line="137" package="global">
+        <name>cleanJavascriptString</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension::cleanJavascriptString()</full_name>
+        <docblock line="137">
+          <description>This method alters JS string to be used by this extension</description>
+          <long-description></long-description>
+          <tag name="param" line="137" description="&lt;p&gt;The original Javascript string&lt;/p&gt;" type="string" variable="$string">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="137" description="The string cleaned to be used in &quot;eval&quot;" type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$string</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="GeekyHouse\ExternalTrackingBundle\Twig\Extension" line="157" package="global">
+        <name>escapeDoubleQuoteJS</name>
+        <full_name>\GeekyHouse\ExternalTrackingBundle\Twig\Extension\ExternalTrackingExtension::escapeDoubleQuoteJS()</full_name>
+        <docblock line="157">
+          <description>This method has to be used preg_replace_callback
+It escape double quotes and escaped double quotes</description>
+          <long-description></long-description>
+          <tag name="param" line="157" description="&lt;p&gt;The matches returned by preg_replace_callbackers&lt;/p&gt;" type="array" variable="$matches">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="157" description="The string escaped" type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$matches</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+    </parse_markers>
+    <source>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</source>
+  </file>
+  <package name="global" full_name="global"/>
+  <namespace name="global" full_name="global"/>
+  <namespace name="GeekyHouse" full_name="GeekyHouse">
+    <namespace name="ExternalTrackingBundle" full_name="GeekyHouse\ExternalTrackingBundle">
+      <namespace name="DependencyInjection" full_name="GeekyHouse\ExternalTrackingBundle\DependencyInjection"/>
+      <namespace name="Event" full_name="GeekyHouse\ExternalTrackingBundle\Event"/>
+      <namespace name="EventListener" full_name="GeekyHouse\ExternalTrackingBundle\EventListener"/>
+      <namespace name="Service" full_name="GeekyHouse\ExternalTrackingBundle\Service"/>
+      <namespace name="Tests" full_name="GeekyHouse\ExternalTrackingBundle\Tests">
+        <namespace name="Controller" full_name="GeekyHouse\ExternalTrackingBundle\Tests\Controller">
+          <namespace name="Controller" full_name="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Controller"/>
+          <namespace name="EventListener" full_name="GeekyHouse\ExternalTrackingBundle\Tests\Controller\EventListener"/>
+          <namespace name="Service" full_name="GeekyHouse\ExternalTrackingBundle\Tests\Controller\Service"/>
+        </namespace>
+      </namespace>
+      <namespace name="Twig" full_name="GeekyHouse\ExternalTrackingBundle\Twig">
+        <namespace name="Extension" full_name="GeekyHouse\ExternalTrackingBundle\Twig\Extension"/>
+      </namespace>
+    </namespace>
+  </namespace>
+  <deprecated count="0"/>
+</project>
