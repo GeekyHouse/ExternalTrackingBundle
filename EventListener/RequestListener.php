@@ -91,6 +91,10 @@ class RequestListener implements EventSubscriberInterface
     {
         // Inject all templates datas in global twig variable
         // /!\ Beware of PHP memory.
+        $controllerResult = $event->getControllerResult();
+        if(!is_array($controllerResult)) {
+            $controllerResult = array($controllerResult);
+        }
         $this->ExternalTrackingManager->pushData($event->getControllerResult());
 
         // Inject a default tracking event
