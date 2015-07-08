@@ -99,6 +99,23 @@ class ExternalTrackingManager
     }
 
     /**
+     * This methods store an array of methods for an array of events
+     *
+     * @param array $events   The events targeted
+     * @param array $methods  The methods to invoke
+     *
+     * @return ExternalTrackingManager An ExternalTrackingManager instance
+     */
+    public function registerEvents(array $events, array $methods)
+    {
+        foreach ($events as $event) {
+            $this->registerEvent($event, $methods);
+        }
+
+        return $this;
+    }
+
+    /**
      * Set the default event
      *
      * @param string  $event The default event to set
